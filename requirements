@@ -1,5 +1,0 @@
-python-telegram-bot==11.1.0 
-requests
-python_dotenv
-dialogflow
-vk_api
