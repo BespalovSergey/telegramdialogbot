@@ -7,7 +7,7 @@ import random
 
 def echo(event ,vk_ap):
   vk_ap.messages.send(user_id = event.user_id,
-  message = get_dialog_answer(event.user_id,event.text,False),
+  message = get_dialog_answer(event.user_id,event.text),
   random_id = random.randint(1,1000) )
 
 def vk_bot():
