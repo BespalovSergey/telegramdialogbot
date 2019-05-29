@@ -2,15 +2,14 @@ import requests
 import logging
 import os
 
-def get_dialog_answer(session_id,text,default):
+def get_dialog_answer(session_id,text,default_message = None):
+
   logger = logging.getLogger('bot_logger')
   answer_message = ''
-  default_message = 'Извините я вас не понял'
   headers = {
   "Authorization":os.environ['dialog_token']
   }
   url = 'https://api.dialogflow.com/v1/query/'
-
   params = {
     'v':20150910,
     'name':'welcome',
@@ -19,18 +18,14 @@ def get_dialog_answer(session_id,text,default):
     'query':text
 
   }
-  try:
-
-    response  = requests.get(url = url, params = params,headers= headers)
-    response.raise_for_status()
-    server_answer = response.json()
+  
+  response  = requests.get(url = url, params = params,headers=headers)
+  response.raise_for_status()
+  server_answer = response.json()
     
-    if server_answer['result']['metadata']['isFallbackIntent'] == 'true' and default:
-      answer_message = default_message
-      
-    else:
-      answer_message = server_answer['result']['fulfillment']['speech']
-  except (ConnectionError  ,requests.exceptions.HTTPError) as err:
-    logger.info(err)
+  if server_answer['result']['metadata']['isFallbackIntent'] == 'true' and default_message:
     answer_message = default_message
+  else:
+    answer_message = server_answer['result']['fulfillment']['speech']
+  
   return answer_message
