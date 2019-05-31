@@ -26,6 +26,6 @@ def main():
   
   
 if __name__ == '__main__':
-  #main()
-  send_intents.post_intents()
+  main()
+  
   
