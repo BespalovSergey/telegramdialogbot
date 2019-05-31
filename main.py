@@ -5,6 +5,7 @@ import logging
 import os
 import requests
 from vk_dialog import vk_bot
+import send_intents
 
 def main():
 
@@ -19,11 +20,12 @@ def main():
   try:
     telegram_bot()
     vk_bot()
-  except (ConnectionError  ,requests.exceptions.HTTPError) as err:
-    logger.info(err)
+  except (ConnectionError  ,requests.exceptions.HTTPError):
+    logger.exception()
     
   
   
 if __name__ == '__main__':
-  main()
+  #main()
+  send_intents.post_intents()
   
