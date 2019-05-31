@@ -3,8 +3,6 @@ import logging
 import os
 
 def get_dialog_answer(session_id,text,default_message = None):
-
-  logger = logging.getLogger('bot_logger')
   answer_message = ''
   headers = {
   "Authorization":os.environ['dialog_token']
@@ -12,7 +10,7 @@ def get_dialog_answer(session_id,text,default_message = None):
   url = 'https://api.dialogflow.com/v1/query/'
   params = {
     'v':20150910,
-    'name':'welcome',
+    
     'lang':'ru',
     'sessionId':session_id,
     'query':text
@@ -27,5 +25,7 @@ def get_dialog_answer(session_id,text,default_message = None):
     answer_message = default_message
   else:
     answer_message = server_answer['result']['fulfillment']['speech']
-  
+ 
+  if not server_answer['result']['fulfillment']['speech']:
+    answer_message = 'Не нашёл ответа на вашу реплику'
   return answer_message
