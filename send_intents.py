@@ -3,13 +3,6 @@ import requests
 import logging
 from log_handler import MyLogsHandler
 
-def raise_response( response , logger):
-  
-  if response.raise_for_status():
-    
-    logger.info('Произошла ошибка при передачи интента')
-
-
 def post_intents():
 
   logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message) s ')
@@ -20,7 +13,6 @@ def post_intents():
   url = os.environ['train_phrases']
 
   response = requests.get(url = url)
-  raise_response(response,logger)
   phrases = response.json()
   
   
@@ -62,20 +54,12 @@ def post_intents():
       }
         
     google_response = requests.post(url = googl_url,  headers = headers,json= data  )
-    raise_response(google_response,logger)
+    if google_response.raise_for_status():  
+      logger.info('Произошла ошибка при передачи интента')
+    
  
 
 if __name__ == '__main__':
   post_intents()  
   
-  
-  
-  
-
-
-
-
-
-  
-
- 
+   
