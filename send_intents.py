@@ -55,7 +55,7 @@ def post_intents():
         
     google_response = requests.post(url = googl_url,  headers = headers,json= data  )
     if google_response.raise_for_status():  
-      logger.info('Произошла ошибка при передачи интента')
+      logger.error('Произошла ошибка при передачи интента')
     
  
 
